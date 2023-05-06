@@ -192,19 +192,21 @@ public class CollisionChecker { // call in gamePanel.class
 
     }
 
-    private int countOfPlayerKey = 0;
+    private int countDelay = 0;
 
-    public int getCountOfPlayerKey() {
-        return countOfPlayerKey;
+    public int getCountDelay() {
+        return countDelay;
     }
 
-    public void setCountOfPlayerKey(int countOfPlayerKey) {
-        this.countOfPlayerKey = countOfPlayerKey;
+    public void setCountDelay(int countDelay) {
+        this.countDelay = countDelay;
     }
 
     public int checkObj(Entity entity, Boolean playerCondition) {
         int index = 999;
+        int countDelay = 0;
         for (Box box : boxesCopy) {
+
             int boxSpeed = 2;
             int playerSpeed = 4;
             if (box.getRoom() == player.getRoomPlayerIn()) {
@@ -230,12 +232,11 @@ public class CollisionChecker { // call in gamePanel.class
 
                 switch (entity.getDirection()) {
                     case "up":
-
                         entity.solidArea.y -= entity.getSpeed();
                         if (entity.solidArea.intersects(box.solidArea)) {
 
                             if (playerCondition) {
-                                countOfPlayerKey++;
+
                                 if (box.isCollision() == true) {
                                     box.solidArea.x -= box.getPosX();
                                     box.solidArea.y -= box.getPosY();
@@ -246,14 +247,19 @@ public class CollisionChecker { // call in gamePanel.class
                                     interBox.setX(interBox.getX() - 1);
                                     int temp = checkObj(interBox, false);
                                     if (!interBox.getCollisionOn()) {
-                                        if (countOfPlayerKey != 11) {
+                                        if ((box.getPosY() + box.solidArea.height + 2)
+                                                % (box.solidArea.height + 2) != 0) {
                                             entity.setSpeed(boxSpeed);
                                             box.setPosY(box.getPosY() - entity.getSpeed());
                                             entity.setSpeed(playerSpeed);
                                         } else {
-                                            countOfPlayerKey = 0;
-                                            entity.setY(entity.getY() + entity.getSpeed());
-                                            box.setPosY(box.getPosY() - boxSpeed);
+                                            setCountDelay(getCountDelay() + 1);
+                                            if (getCountDelay() == 25) {
+                                                box.setPosY(box.getPosY() - boxSpeed);
+                                                setCountDelay(0);
+                                            } else {
+                                                box.setPosY(box.getPosY());
+                                            }
                                         }
                                     }
                                     entity.setCollisionOn(true);
@@ -261,7 +267,6 @@ public class CollisionChecker { // call in gamePanel.class
                             } else {
                                 if (box.isCollision() == true
                                         && ((box.getPosX() != entity.getX()) && (box.getPosY() != entity.getY()))) {
-                                    entity.setY(entity.getY() + boxSpeed);
                                     entity.setCollisionOn(true);
                                 }
                             }
@@ -273,7 +278,6 @@ public class CollisionChecker { // call in gamePanel.class
                         entity.solidArea.y += entity.getSpeed();
                         if (entity.solidArea.intersects(box.solidArea)) {
                             if (playerCondition) {
-                                countOfPlayerKey++;
                                 if (box.isCollision() == true) {
                                     box.solidArea.x -= box.getPosX();
                                     box.solidArea.y -= box.getPosY();
@@ -283,14 +287,19 @@ public class CollisionChecker { // call in gamePanel.class
                                     interBox.setX(interBox.getX() + 1);
                                     int temp = checkObj(interBox, false);
                                     if (!interBox.getCollisionOn()) {
-                                        if (countOfPlayerKey != 11) {
+                                        if ((box.getPosY())
+                                                % (box.solidArea.height + 2) != 0) {
                                             entity.setSpeed(boxSpeed);
                                             box.setPosY(box.getPosY() + entity.getSpeed());
                                             entity.setSpeed(playerSpeed);
                                         } else {
-                                            countOfPlayerKey = 0;
-                                            entity.setY(entity.getY() - entity.getSpeed());
-                                            box.setPosY(box.getPosY() + boxSpeed);
+                                            setCountDelay(getCountDelay() + 1);
+                                            if (getCountDelay() == 25) {
+                                                box.setPosY(box.getPosY() + boxSpeed);
+                                                setCountDelay(0);
+                                            } else {
+                                                box.setPosY(box.getPosY());
+                                            }
                                         }
                                     }
                                     entity.setCollisionOn(true);
@@ -298,7 +307,6 @@ public class CollisionChecker { // call in gamePanel.class
                             } else {
                                 if (box.isCollision() == true
                                         && ((box.getPosX() != entity.getX()) && (box.getPosY() != entity.getY()))) {
-                                    entity.setY(entity.getY() - boxSpeed);
                                     entity.setCollisionOn(true);
                                 }
                             }
@@ -309,7 +317,6 @@ public class CollisionChecker { // call in gamePanel.class
                         entity.solidArea.x -= entity.getSpeed();
                         if (entity.solidArea.intersects(box.solidArea)) {
                             if (playerCondition) {
-                                countOfPlayerKey++;
                                 if (box.isCollision() == true) {
                                     box.solidArea.x -= box.getPosX();
                                     box.solidArea.y -= box.getPosY();
@@ -319,14 +326,19 @@ public class CollisionChecker { // call in gamePanel.class
                                     interBox.setY(interBox.getY() - 1);
                                     int temp = checkObj(interBox, false);
                                     if (!interBox.getCollisionOn()) {
-                                        if (countOfPlayerKey != 11) {
+                                        if ((box.getPosX() + box.solidArea.width + 2)
+                                                % (box.solidArea.width + 2) != 0) {
                                             entity.setSpeed(boxSpeed);
                                             box.setPosX(box.getPosX() - entity.getSpeed());
                                             entity.setSpeed(playerSpeed);
                                         } else {
-                                            countOfPlayerKey = 0;
-                                            entity.setX(entity.getX() + entity.getSpeed());
-                                            box.setPosX(box.getPosX() - boxSpeed);
+                                            setCountDelay(getCountDelay() + 1);
+                                            if (getCountDelay() == 25) {
+                                                box.setPosX(box.getPosX() - boxSpeed);
+                                                setCountDelay(0);
+                                            } else {
+                                                box.setPosX(box.getPosX());
+                                            }
                                         }
                                     }
                                     entity.setCollisionOn(true);
@@ -334,7 +346,6 @@ public class CollisionChecker { // call in gamePanel.class
                             } else {
                                 if (box.isCollision() == true
                                         && ((box.getPosX() != entity.getX()) && (box.getPosY() != entity.getY()))) {
-                                    entity.setX(entity.getX() + boxSpeed);
                                     entity.setCollisionOn(true);
                                 }
                             }
@@ -345,7 +356,6 @@ public class CollisionChecker { // call in gamePanel.class
                         entity.solidArea.x += entity.getSpeed();
                         if (entity.solidArea.intersects(box.solidArea)) {
                             if (playerCondition) {
-                                countOfPlayerKey++;
                                 if (box.isCollision() == true) {
                                     box.solidArea.x -= box.getPosX();
                                     box.solidArea.y -= box.getPosY();
@@ -355,14 +365,19 @@ public class CollisionChecker { // call in gamePanel.class
                                     interBox.setY(interBox.getY() + 1);
                                     int temp = checkObj(interBox, false);
                                     if (!interBox.getCollisionOn()) {
-                                        if (countOfPlayerKey != 11) {
+
+                                        if ((box.getPosX()) % (box.solidArea.width + 2) != 0) {
                                             entity.setSpeed(boxSpeed);
                                             box.setPosX(box.getPosX() + entity.getSpeed());
                                             entity.setSpeed(playerSpeed);
                                         } else {
-                                            countOfPlayerKey = 0;
-                                            entity.setX(entity.getX() - entity.getSpeed());
-                                            box.setPosX(box.getPosX() + boxSpeed);
+                                            setCountDelay(getCountDelay() + 1);
+                                            if (getCountDelay() == 25) {
+                                                box.setPosX(box.getPosX() + boxSpeed);
+                                                setCountDelay(0);
+                                            } else {
+                                                box.setPosX(box.getPosX());
+                                            }
                                         }
                                     }
                                     entity.setCollisionOn(true);
@@ -370,11 +385,10 @@ public class CollisionChecker { // call in gamePanel.class
                             } else {
                                 if (box.isCollision() == true
                                         && ((box.getPosX() != entity.getX()) && (box.getPosY() != entity.getY()))) {
-                                    entity.setX(entity.getX() - boxSpeed);
-
                                     entity.setCollisionOn(true);
                                 }
                             }
+
                             // System.out.println("right collision");
                         }
                         break;
