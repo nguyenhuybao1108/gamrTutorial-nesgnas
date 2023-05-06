@@ -5,19 +5,19 @@ import java.awt.image.BufferedImage;
 
 public class Entity {
 
-    private int x,y;
+    private int x, y;
 
     private int solidAreaDefaultX, SolidAreaDefaultY;
 
     private int speed;
 
-    public BufferedImage up1,up2, down1, down2,
-            left1, left2, right1,right2;
+    public BufferedImage up1, up2, down1, down2,
+            left1, left2, right1, right2;
     private String direction = "down";
-    private int countFrame=1;
-    private int flagPic=1;
+    private int countFrame = 1;
+    private int flagPic = 1;
     public Rectangle solidArea;
-    private boolean collisionOn =false;
+    private boolean collisionOn = false;
 
     public int getSolidAreaDefaultX() {
         return solidAreaDefaultX;
@@ -48,8 +48,6 @@ public class Entity {
     }
 
     ///////////////////////// place to put setter and getter
-
-
 
     public void setCollisionOn(boolean collisionOn) {
         this.collisionOn = collisionOn;
