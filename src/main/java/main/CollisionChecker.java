@@ -261,6 +261,7 @@ public class CollisionChecker { // call in gamePanel.class
                             } else {
                                 if (box.isCollision() == true
                                         && ((box.getPosX() != entity.getX()) && (box.getPosY() != entity.getY()))) {
+                                    entity.setY(entity.getY() + boxSpeed);
                                     entity.setCollisionOn(true);
                                 }
                             }
@@ -297,6 +298,7 @@ public class CollisionChecker { // call in gamePanel.class
                             } else {
                                 if (box.isCollision() == true
                                         && ((box.getPosX() != entity.getX()) && (box.getPosY() != entity.getY()))) {
+                                    entity.setY(entity.getY() - boxSpeed);
                                     entity.setCollisionOn(true);
                                 }
                             }
@@ -332,6 +334,7 @@ public class CollisionChecker { // call in gamePanel.class
                             } else {
                                 if (box.isCollision() == true
                                         && ((box.getPosX() != entity.getX()) && (box.getPosY() != entity.getY()))) {
+                                    entity.setX(entity.getX() + boxSpeed);
                                     entity.setCollisionOn(true);
                                 }
                             }
@@ -367,6 +370,8 @@ public class CollisionChecker { // call in gamePanel.class
                             } else {
                                 if (box.isCollision() == true
                                         && ((box.getPosX() != entity.getX()) && (box.getPosY() != entity.getY()))) {
+                                    entity.setX(entity.getX() - boxSpeed);
+
                                     entity.setCollisionOn(true);
                                 }
                             }
